@@ -1,0 +1,16 @@
+---
+- name: "Install Python Flask"
+  pip:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - flask
+    - flask-mysql
+
+- name: "Copy WebServer Code"
+  copy:
+    src: app.py
+    dest: /opt/app.py
+
+- name: "Starting the Web web-server"
+  shell: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
